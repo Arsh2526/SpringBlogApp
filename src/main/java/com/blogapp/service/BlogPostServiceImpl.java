@@ -1,6 +1,7 @@
 package com.blogapp.service;
 
 import com.blogapp.entity.BlogPost;
+import com.blogapp.exception.ResourceNotFoundException;
 import com.blogapp.payload.BlogPostDto;
 import com.blogapp.repository.BlogPostRepository;
 import org.springframework.stereotype.Service;
@@ -51,8 +52,10 @@ public class BlogPostServiceImpl implements BlogPostService{
         if (opPost.isPresent()){
             BlogPost blogPost = opPost.get();
             return blogPost;
+        }else{
+            throw new ResourceNotFoundException("post with id "+postId+" not found");
         }
-        return null;
+
     }
 
     @Override
