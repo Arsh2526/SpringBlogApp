@@ -61,11 +61,9 @@ public class BlogPostServiceImpl implements BlogPostService{
     @Override
     public BlogPost updatePost(long postId, BlogPostDto blogPostDto) {
 
-        Optional<BlogPost> opPost = blogPostRepository.findById(postId);
-        BlogPost post=null;
-        if (opPost.isPresent()) {
-             post = opPost.get();
-        }
+        BlogPost post = blogPostRepository.findById(postId).orElseThrow(
+                () -> new ResourceNotFoundException("post with id " + postId + " not found")
+        );
         post.setTitle(blogPostDto.getTitle());
         post.setContent(blogPostDto.getContent());
 
